@@ -1,0 +1,108 @@
+{
+  "version": "1.0.0",
+  "widgets": [
+    {
+      "uri": "/thesis-check-result",
+      "name": "ThesisCheck Result",
+      "description": "Interactive reasoning interface showing caution level, evidence trail, behavioral flags, fundamentals-vs-sentiment divergence, portfolio impact, and reflective questions for a proposed trade",
+      "examples": [
+        {
+          "name": "FOMO buy example",
+          "description": "A first-time excited buy with hype-driven rationale and elevated caution",
+          "data": {
+            "decisionId": "example-1",
+            "ticker": "ACME",
+            "action": "buy",
+            "quantity": 10,
+            "statedRationale": "Everyone is talking about it and I don't want to miss out",
+            "cautionLevel": "red",
+            "evidenceTrail": [
+              {
+                "dimension": "behavioral",
+                "summary": "1 behavioral pattern(s) detected: fomo_buying.",
+                "detail": "[medium] First-time position in ACME initiated while feeling excited, with no prior research trail on this ticker."
+              },
+              {
+                "dimension": "fundamentals_sentiment",
+                "summary": "Sentiment (82/100) is running well ahead of fundamentals (38/100), with spiking mention volume.",
+                "detail": "Fundamentals score: 38/100. Sentiment score: 64 (-100 to 100), normalized to 82/100. Divergence: 44 points."
+              },
+              {
+                "dimension": "portfolio_risk",
+                "summary": "This trade brings ACME to 12.4% of the portfolio, a meaningful but not extreme allocation.",
+                "detail": "Projected position weight: 12.4%. Projected sector weight: 18.2%. Concentration risk: moderate."
+              },
+              {
+                "dimension": "rationale_alignment",
+                "summary": "1/1 checkable claim(s) in the stated rationale align with the data.",
+                "detail": "\"everyone is talking\": Sentiment data shows spiking mention volume, consistent with the claim."
+              }
+            ],
+            "behavioral": {
+              "flags": [
+                {
+                  "pattern": "fomo_buying",
+                  "severity": "medium",
+                  "explanation": "First-time position in ACME initiated while feeling excited, with no prior research trail on this ticker."
+                }
+              ],
+              "recentTradeCount": 1,
+              "recentTickerTradeCount": 0,
+              "sameDirectionStreak": 1
+            },
+            "fundamentals": {
+              "ticker": "ACME",
+              "source": "simulated",
+              "peRatio": 45.2,
+              "revenueGrowthYoY": 8.1,
+              "profitMarginPct": 4.3,
+              "debtToEquity": 1.4,
+              "fundamentalsScore": 38
+            },
+            "sentiment": {
+              "ticker": "ACME",
+              "source": "simulated",
+              "sentimentScore": 64,
+              "socialMentionVolume": "spiking",
+              "headlineSample": ["Retail chatter around ACME picks up on social platforms"]
+            },
+            "divergence": {
+              "ticker": "ACME",
+              "fundamentalsScore": 38,
+              "sentimentScore": 64,
+              "normalizedSentimentScore": 82,
+              "divergence": 44,
+              "hypeRisk": true,
+              "overlookedValue": false,
+              "interpretation": "Sentiment is running well ahead of fundamentals."
+            },
+            "portfolioImpact": {
+              "currentTotalValue": 10000,
+              "currentTickerWeightPct": 0,
+              "currentSectorWeightPct": 5.8,
+              "projectedTickerWeightPct": 12.4,
+              "projectedSectorWeightPct": 18.2,
+              "concentrationRisk": "moderate",
+              "explanation": "This trade brings ACME to 12.4% of the portfolio, a meaningful but not extreme allocation."
+            },
+            "rationaleChecks": [
+              {
+                "claimType": "momentum_hype",
+                "matchedPhrase": "everyone is talking",
+                "aligned": true,
+                "explanation": "Sentiment data shows spiking mention volume, consistent with the claim."
+              }
+            ],
+            "reflectiveQuestions": [
+              "What would you need to see to buy ACME even if it weren't getting attention right now?",
+              "Sentiment looks well ahead of fundamentals here — what's the specific catalyst you expect to close that gap?"
+            ],
+            "disclaimer": "ThesisCheck is advisory only. It never places, modifies, or cancels trades."
+          }
+        }
+      ],
+      "tags": ["finance", "behavioral", "advisory", "thesis-check"]
+    }
+  ],
+  "generatedAt": "2026-07-25T00:00:00.000Z"
+}
