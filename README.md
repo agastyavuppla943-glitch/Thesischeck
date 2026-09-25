@@ -14,14 +14,19 @@ them, with evidence, and asks better questions.
 ```
 src/
   modules/
-    behavioral/     # logs trade decisions, detects impulsive patterns
-    market-data/     # fundamentals + sentiment providers, divergence signal
-    portfolio/       # holdings/cash tracking, concentration-risk impact
-    thesis-check/    # orchestrator: the core evaluate_trade_thesis tool
+    behavioral/            # trade log, journal, impulsive-pattern detection
+    market-data/           # quotes, news, earnings, fundamentals/sentiment
+    portfolio/             # holdings, allocation, risk, trade simulation
+    thesis-check/          # evaluate_trade_thesis, audit trail, preflight
+    advanced-analysis/     # technical analysis, backtest, DCF, correlation
+    market-intelligence/   # insider activity, options, short interest
+    company/               # company overview, peers, financials, watchlist
   widgets/
-    app/thesis-check-result/  # interactive reasoning-interface widget
+    app/thesis-check-result/       # thesis evaluation UI
+    app/technical-analysis-result/ # technical analysis UI
   shared/
-    storage.ts       # simple JSON-file persistence (data/*.json)
+    storage.ts             # SQLite persistence (data/thesischeck.db)
+    api-key.guard.ts       # shared API key validation for guards
 ```
 
 ### Behavioral patterns detected
@@ -41,6 +46,12 @@ call fails for any reason. The live-provider code paths have not been tested
 against real endpoints in this environment (no network egress to those
 hosts here) — validate them yourself before relying on live data in
 production.
+
+### Persistence
+
+State (portfolio, trade history, audit log, etc.) is stored in
+`data/thesischeck.db` (SQLite via better-sqlite3). On first boot, legacy
+`data/*.json` files are imported once and renamed to `*.json.migrated`.
 
 ### Portfolio concentration
 
@@ -62,9 +73,13 @@ current value is never double-counted.
   what actually rejects unexpected/injected fields (verified in testing —
   see below).
 - **`AuditLogMiddleware`** — a real `MiddlewareInterface` that persists every
-  call (success or failure) to `data/audit_log.json`, exposed as the
-  `thesischeck://audit-log` MCP resource so the evidence trail is
+  call (success or failure) to the `audit_log` SQLite collection, exposed as
+  the `thesischeck://audit-log` MCP resource so the evidence trail is
   independently inspectable rather than a black box.
+- **`ApiKeyGuard`** — optional strict guard (always requires a valid key);
+  shared validation helpers live in `src/shared/api-key.guard.ts`. The core
+  `evaluate_trade_thesis` tool uses **`AdvisoryOnlyGuard`**, which applies
+  the same validation only when `THESISCHECK_REQUIRE_AUTH=true`.
 
 ## Tools
 
